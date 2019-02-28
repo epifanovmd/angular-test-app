@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
-    "lint": "ng lint",
+    "lint": "tslint \"src/**/*.ts\"",
+    "lint:fix": "tslint --fix \"src/**/*.ts\"",
     "e2e": "ng e2e"
   },
   "private": true,

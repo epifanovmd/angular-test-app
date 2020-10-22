@@ -1,0 +1,13 @@
+<div class="app-navigation">
+  <ul nz-menu>
+    <ng-container *ngFor="let navigationItem of navigation">
+      <li nz-menu-item>
+        <a title
+           [routerLink]="'/' + navigationItem.routerLink">
+          {{navigationItem.title}}
+        </a>
+      </li>
+    </ng-container>
+  </ul>
+</div>
+

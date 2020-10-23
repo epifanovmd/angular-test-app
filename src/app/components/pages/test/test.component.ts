@@ -2,7 +2,7 @@ import { Component } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { Observable } from "rxjs";
 import { IAppState } from "../../../store/store.modeule";
-import { ITestState } from "./testState";
+import { TestActions } from "./testActions";
 
 @Component({
   selector: "app-test-page",
@@ -10,23 +10,26 @@ import { ITestState } from "./testState";
   styleUrls: ["./test.component.scss"],
 })
 export class TestPage {
-  state: Observable<ITestState>;
+  counter: Observable<number>;
+  title: string = "My Title";
 
   constructor(private store: Store<IAppState>) {
-    this.state = store.select("test");
+    this.counter = store.select("test", "counter");
+  }
 
-    console.log("1111111111", this.state);
+  onChangeValue(value: string) {
+    this.title = value;
   }
 
   increment() {
-    // TODO: Dispatch an increment action
+    this.store.dispatch(TestActions.increment());
   }
 
   decrement() {
-    // TODO: Dispatch a decrement action
+    this.store.dispatch(TestActions.decrement());
   }
 
   reset() {
-    // TODO: Dispatch a reset action
+    this.store.dispatch(TestActions.reset());
   }
 }

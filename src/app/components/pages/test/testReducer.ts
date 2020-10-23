@@ -1,16 +1,16 @@
 import { createReducer, on } from "@ngrx/store";
-import { increment, decrement, reset } from "./testActions";
+import { TestActions } from "./testActions";
 import { initialTestState, ITestState } from "./testState";
 
 export const testReducer = createReducer<ITestState>(
   initialTestState,
-  on(increment, state => ({
+  on(TestActions.increment, state => ({
     counter: state.counter + 1,
   })),
-  on(decrement, state => ({
+  on(TestActions.decrement, state => ({
     counter: state.counter - 1,
   })),
-  on(reset, () => ({
+  on(TestActions.reset, () => ({
     counter: 0,
   })),
 );

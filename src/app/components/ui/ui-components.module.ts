@@ -1,8 +1,9 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
+import { InputComponent } from "./input/input.component";
 
-const components = [];
+const components = [InputComponent];
 
 @NgModule({
   declarations: [...components],

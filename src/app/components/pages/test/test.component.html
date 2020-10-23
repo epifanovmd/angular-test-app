@@ -1,9 +1,23 @@
 <div>
   <button (click)="increment()">Increment</button>
 
-<div>Current Count: {{ state }}</div>
+<div>Current Count: {{ counter | async }}</div>
 
 <button (click)="decrement()">Decrement</button>
 
 <button (click)="reset()">Reset Counter</button>
+
+  <br>
+  <br>
+
+  <div *ngIf="title; else noTitle">
+    <h1>{{title}}</h1>
+  </div>
+
+  <ng-template #noTitle><div>Title отсутствует</div></ng-template>
+
+  <input type="text" [(ngModel)]="title" placeholder="Введите строку" />
+  <br>
+  <app-input placeholder="placeholder" [label]="title" [value]="title" (changeValue)="onChangeValue($event)"></app-input>
+
 </div>

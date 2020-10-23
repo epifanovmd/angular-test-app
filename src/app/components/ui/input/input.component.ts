@@ -9,9 +9,9 @@ export class InputComponent {
   @Input() placeholder: string;
   @Input() label: string;
   @Input() value: string;
-  @Output() changeValue = new EventEmitter<string>();
+  @Output() valueChange = new EventEmitter<string>();
 
   onChangeValue(event) {
-    this.changeValue.emit(event.target.value);
+    this.valueChange.emit(event.target.value);
   }
 }

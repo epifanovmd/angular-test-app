@@ -17,6 +17,6 @@
   <ng-template #noTitle><div>Title отсутствует</div></ng-template>
 
   <input type="text" [(ngModel)]="title" placeholder="Введите строку" />
-  <app-input placeholder="placeholder" [label]="title" [value]="title" (changeValue)="onChangeValue($event)"></app-input>
+  <app-input placeholder="placeholder" [label]="title" [(value)]="title"></app-input>
 
 </div>

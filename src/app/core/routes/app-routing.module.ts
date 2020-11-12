@@ -4,6 +4,7 @@ import { DashboardPage } from "../../components/pages/dashboard/dashboard.compon
 import { NotFoundPage } from "../../components/pages/not-found/not-found-page.component";
 import { TestPage } from "../../components/pages/test/test.component";
 import { routePath } from "./path";
+import { UsersPage } from "../../components/pages/users/users.component";
 
 export interface INavigationItem {
   title: string;
@@ -18,6 +19,10 @@ const routes: Routes = [
   {
     path: routePath.test,
     component: TestPage,
+  },
+  {
+    path: routePath.users,
+    component: UsersPage,
   },
   {
     path: "**",
@@ -37,6 +42,10 @@ export const routeLinks: INavigationItem[] = [
   {
     title: "Тестовая страница",
     routerLink: "/test",
+  },
+  {
+    title: "Пользователи",
+    routerLink: "/users",
   },
 ];
 

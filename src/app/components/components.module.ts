@@ -5,6 +5,7 @@ import { CommonComponentsModule } from "./common/common-components.module";
 import { NavigationComponent } from "./common/navigation/navigation.component";
 import { PagesModule } from "./pages/pages.module";
 import { UiComponentsModule } from "./ui/ui-components.module";
+import { ListsComponentsModule } from "./lists/lists-components.module";
 
 @NgModule({
   declarations: [NavigationComponent],
@@ -14,6 +15,7 @@ import { UiComponentsModule } from "./ui/ui-components.module";
     CommonComponentsModule,
     CommonModule,
     UiComponentsModule,
+    ListsComponentsModule,
   ],
   exports: [NavigationComponent],
   providers: [],

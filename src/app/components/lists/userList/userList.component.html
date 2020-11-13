@@ -11,5 +11,5 @@
     <td>{{ user.website }}</td>
   </tr>
 
-  <div *ngIf="loading === true">loading</div>
+  <div *ngIf="(loading | async) === true">loading</div>
 </table>

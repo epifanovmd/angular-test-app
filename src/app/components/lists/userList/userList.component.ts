@@ -14,12 +14,15 @@ export class UserList implements OnInit {
     private apiService: UsersService,
     private store: Store<IAppState>,
   ) {}
-  userList = {};
+  userList = [];
+  // eslint-disable-next-line no-invalid-this
+  loading = this.store.select("users", "loading");
 
   async ngOnInit() {
     // this.userList = await this.apiService.getList();
-    this.userList = await this.apiService.getListAsync();
-    console.log("userList", this.userList);
+    await this.apiService.getListAsync();
+
+    this.store.select("users", "list").subscribe(res => (this.userList = res));
   }
 
   @Input() users: IUser;

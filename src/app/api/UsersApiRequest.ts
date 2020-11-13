@@ -3,7 +3,7 @@ import { BaseRequest, IResponse } from "./BaseRequest";
 import { IUser } from "../interfaces/entries/user";
 import { RequestType } from "./requestType";
 import { HttpClient } from "@angular/common/http";
-import { UsersActions } from "../components/lists/userList/users.actions";
+import { UsersActions } from "../components/lists/userList/usersActions";
 import { IAppState } from "../store/store.modeule";
 import { Store } from "@ngrx/store";
 

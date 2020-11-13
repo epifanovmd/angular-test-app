@@ -1,16 +1,19 @@
 import { createReducer, on } from "@ngrx/store";
-import { UsersActions } from "./users.actions";
-import { initialUsersState, IUsersState } from "./users.state";
+import { UsersActions } from "./usersActions";
+import { initialUsersState, IUsersState } from "./usersState";
 
-export const testReducer = createReducer<IUsersState>(
+export const usersReducer = createReducer<IUsersState>(
   initialUsersState,
   on(UsersActions.getList.started, (state, { payload }) => ({
+    loading: true,
     list: [],
   })),
   on(UsersActions.getList.done, (state, { payload }) => ({
+    loading: false,
     list: payload.result.data,
   })),
   on(UsersActions.getList.failed, () => ({
+    loading: false,
     list: [],
   })),
 );

@@ -1,6 +1,6 @@
 import { createReducer, on } from "@ngrx/store";
-import { TestActions } from "./test.actions";
-import { initialTestState, ITestState } from "./test.state";
+import { TestActions } from "./testActions";
+import { initialTestState, ITestState } from "./testState";
 
 export const testReducer = createReducer<ITestState>(
   initialTestState,

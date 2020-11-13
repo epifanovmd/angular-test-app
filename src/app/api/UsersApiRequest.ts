@@ -4,7 +4,7 @@ import { IUser } from "../interfaces/entries/user";
 import { RequestType } from "./requestType";
 import { HttpClient } from "@angular/common/http";
 import { UsersActions } from "../components/lists/userList/usersActions";
-import { IAppState } from "../store/store.modeule";
+import { IAppState } from "../store/store.module";
 import { Store } from "@ngrx/store";
 
 @Injectable()

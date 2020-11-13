@@ -2,11 +2,14 @@ import { Injectable } from "@angular/core";
 import {
   HttpClient,
   HttpHeaders,
-  HttpRequest,
+  HttpParams,
   HttpResponse,
 } from "@angular/common/http";
 import { RequestType } from "./requestType";
 import { IEmpty } from "../interfaces/common/IEmpty";
+import { IAppState } from "../store/store.modeule";
+import { Store } from "@ngrx/store";
+import { AsyncActionCreators } from "typescript-fsa";
 
 export interface IResponse<R> {
   data: R;
@@ -15,13 +18,14 @@ export interface IResponse<R> {
   message?: string;
 }
 
-export interface IFetchParams<R> {
+export interface IFetchParams<P, R> {
+  params: P;
   url: string;
   method: RequestType;
   headers?: { [key: string]: string };
-  transformData?: (result: R) => R;
-  onSuccess?: (result: R) => R;
-  onFail?: (error?: Error) => void;
+  actions: AsyncActionCreators<P, R, Error>;
+  onSuccess?: (result: IResponse<R>) => void;
+  onFail?: (error: Error) => void;
 }
 
 @Injectable()
@@ -35,20 +39,46 @@ export abstract class BaseRequest {
   };
 
   // eslint-disable-next-line no-empty-function
-  protected constructor(protected http: HttpClient) {}
+  protected constructor(
+    protected http: HttpClient,
+    protected store: Store<IAppState>,
+  ) {}
 
   async fetch<R, P>({
     url,
-    method,
-    headers,
-    transformData,
-    onSuccess,
-    onFail,
-  }: IFetchParams<R>): Promise<any> {
+    params = {},
+    method = RequestType.GET,
+    headers = {},
+  }: {
+    url: string;
+    params?: P | IEmpty;
+    method: RequestType;
+    headers?: { [key: string]: string };
+  }): Promise<any> {
+    const body =
+      method !== RequestType.GET ? { body: JSON.stringify(params) } : {};
+
+    const hasParams = Object.keys(params).length > 0;
+
+    const httpParams = new HttpParams();
+
+    if (hasParams) {
+      // eslint-disable-next-line guard-for-in
+      for (const key in params as P) {
+        httpParams.set(key, (params as P)[key as any]);
+      }
+    }
+
+    const urlResult =
+      method !== RequestType.GET
+        ? `/api/${url}`
+        : `/api/${url}${hasParams ? "?" : ""}${httpParams.toString()}`;
+
     try {
       const res = await this.http
-        .request<any>(method, url, {
+        .request<any>(method, urlResult, {
           withCredentials: true,
+          ...body,
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
@@ -57,23 +87,11 @@ export abstract class BaseRequest {
         })
         .toPromise<HttpResponse<any>>();
 
-      const json = (res || {}) as R;
+      const json = (await res) || {};
       const status = res.status;
 
-      if (status >= 400 || json === null) {
-        onFail &&
-          onFail(new Error((json as any)?.message || status.toString()));
-        throw new Error((json as any)?.message || status.toString());
-      } else {
-        const transformedResult = transformData ? transformData(json) : json;
-
-        onSuccess && onSuccess(transformedResult);
-
-        return { data: transformedResult, status };
-      }
+      return { data: json as any, status };
     } catch (error) {
-      onFail && onFail(new Error(error.message || 500));
-
       return {
         data: {} as R,
         status: 500,
@@ -85,4 +103,56 @@ export abstract class BaseRequest {
 
   static handleError = (error: any): Promise<any> =>
     Promise.reject(error.message || error);
+
+  async callApi<P, R>({
+    params,
+    url,
+    method,
+    headers,
+    actions,
+    onSuccess,
+    onFail,
+  }: IFetchParams<P, R>) {
+    this.store.dispatch(actions.started(params));
+
+    const { data, status, message } = await this.fetch<P, R>({
+      url,
+      params,
+      method,
+      headers,
+    });
+
+    if (status >= 400 || data === null) {
+      const error = {
+        name: status.toString(),
+        message: message || status.toString(),
+      };
+
+      this.store.dispatch(
+        actions.failed({
+          params,
+          error,
+        }),
+      );
+      onFail && onFail(error);
+    } else {
+      this.store.dispatch(
+        actions.done({
+          params,
+          result: {
+            data,
+            message,
+            status,
+          } as any,
+        }),
+      );
+      onSuccess &&
+        true &&
+        onSuccess({
+          data,
+          message,
+          status,
+        });
+    }
+  }
 }

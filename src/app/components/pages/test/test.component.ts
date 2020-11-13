@@ -2,7 +2,7 @@ import { Component } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { Observable } from "rxjs";
 import { IAppState } from "../../../store/store.modeule";
-import { TestActions } from "./testActions";
+import { TestActions } from "./test.actions";
 
 @Component({
   selector: "app-test-page",

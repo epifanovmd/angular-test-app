@@ -10,4 +10,8 @@ export class UsersService {
   getList(): Promise<IResponse<IUser[]>> {
     return this.usersApiRequest.getUsers();
   }
+
+  getListAsync(): Promise<IResponse<IUser[]>> {
+    return this.usersApiRequest.getListAsync();
+  }
 }

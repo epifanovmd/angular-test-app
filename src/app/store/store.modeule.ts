@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 import { StoreModule } from "@ngrx/store";
-import { testReducer } from "../components/pages/test/testReducer";
-import { ITestState } from "../components/pages/test/testState";
+import { testReducer } from "../components/pages/test/test.reducer";
+import { ITestState } from "../components/pages/test/test.state";
 
 export interface IAppState {
   test: ITestState;

@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { BaseRequest } from "./BaseRequest";
+import { BaseRequest, IResponse } from "./BaseRequest";
 import { IUser } from "../interfaces/entries/user";
 import { RequestType } from "./requestType";
 import { HttpClient } from "@angular/common/http";
@@ -10,9 +10,9 @@ export class UsersApiRequest extends BaseRequest {
     super(http);
   }
 
-  getUsers(): Promise<IUser[]> {
+  getUsers(): Promise<IResponse<IUser[]>> {
     return this.fetch({
-      url: "api/admin/settings/getCards",
+      url: "api/users",
       method: RequestType.GET,
     })
       .then(response => response)

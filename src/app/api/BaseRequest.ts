@@ -34,7 +34,7 @@ export abstract class BaseRequest {
     }),
   };
 
-  // eslint-disable-next-line no-useless-constructor,no-empty-function
+  // eslint-disable-next-line no-empty-function
   protected constructor(protected http: HttpClient) {}
 
   async fetch<R, P>({
@@ -57,7 +57,7 @@ export abstract class BaseRequest {
         })
         .toPromise<HttpResponse<any>>();
 
-      const json = ((await res) || {}) as R;
+      const json = (res || {}) as R;
       const status = res.status;
 
       if (status >= 400 || json === null) {

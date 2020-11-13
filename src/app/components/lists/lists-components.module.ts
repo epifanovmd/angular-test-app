@@ -3,6 +3,7 @@ import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { UserList } from "./userList/userList.component";
 import { UsersService } from "../../services/users.service";
+import { UsersApiRequest } from "../../api/UsersApiRequest";
 
 const components = [UserList];
 
@@ -10,7 +11,7 @@ const components = [UserList];
   declarations: [...components],
   imports: [FormsModule, CommonModule],
   exports: [...components],
-  providers: [UsersService],
+  providers: [UsersService, UsersApiRequest],
   bootstrap: [],
 })
 export class ListsComponentsModule {}

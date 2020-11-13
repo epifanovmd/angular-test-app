@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { IUser } from "../../../interfaces/entries/user";
 import { UsersApiRequest } from "../../../api/UsersApiRequest";
 import { UsersService } from "../../../services/users.service";
@@ -8,9 +8,14 @@ import { UsersService } from "../../../services/users.service";
   templateUrl: "./userList.component.html",
   styleUrls: ["./userList.component.scss"],
 })
-export class UserList {
-  constructor(private apiService: UsersService) {
-    apiService.getList();
+export class UserList implements OnInit {
+  constructor(private apiService: UsersService) {}
+  userList = {};
+
+  async ngOnInit() {
+    this.userList = await this.apiService.getList();
+    console.log("userList", this.userList);
   }
+
   @Input() users: IUser;
 }

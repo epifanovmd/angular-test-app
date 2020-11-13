@@ -2,12 +2,12 @@
   <tr>
     <th>Имя</th>
     <th>Email</th>
-    <th>Возраст</th>
+    <th>Сайт</th>
   </tr>
 
-  <tr *ngFor="let user of users">
+  <tr *ngFor="let user of userList.data">
     <td>{{ user.name }}</td>
     <td>{{ user.email }}</td>
-    <td>{{ user.age }}</td>
+    <td>{{ user.website }}</td>
   </tr>
 </table>

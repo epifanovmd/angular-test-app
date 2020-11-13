@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { Observable } from "rxjs";
-import { IAppState } from "../../../store/store.modeule";
+import { IAppState } from "../../../store/store.module";
 import { TestActions } from "./testActions";
 
 @Component({

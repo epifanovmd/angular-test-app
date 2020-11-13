@@ -7,7 +7,7 @@ import {
 } from "@angular/common/http";
 import { RequestType } from "./requestType";
 import { IEmpty } from "../interfaces/common/IEmpty";
-import { IAppState } from "../store/store.modeule";
+import { IAppState } from "../store/store.module";
 import { Store } from "@ngrx/store";
 import { AsyncActionCreators } from "typescript-fsa";
 

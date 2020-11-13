@@ -5,11 +5,10 @@
     <th>Сайт</th>
   </tr>
 
-  <tr *ngFor="let user of userList">
+  <tr *ngFor="let user of userList | async">
     <td>{{ user.name }}</td>
     <td>{{ user.email }}</td>
     <td>{{ user.website }}</td>
   </tr>
-
-  <div *ngIf="(loading | async) === true">loading</div>
 </table>
+<div *ngIf="(loading | async)">loading...</div>
